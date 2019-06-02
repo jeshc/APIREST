@@ -313,6 +313,9 @@ pelicula.save(function(err, data) {
 });
 });
 
+router.post('/:id',function(req,res,next){
+  res.status(405).json({mensaje:'Accion no permitida'});
+});
 /*Falta put y patch*/
 router.patch('/',function(req,res,next){
   res.status(405).json({mensaje:'Accion no permitida'});
