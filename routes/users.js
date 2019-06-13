@@ -326,18 +326,18 @@ router.patch('/:userId', function(req, res, next) {
   var peli = {
     imagen: req.body.imagen,
     fase: req.body.fase,
-    
+
 };
   Movie.findOneAndUpdate({'pelicula.id': req.params.userId},peli,
   function(err, datos) {
     if (datos == null) {
       res.status(404).json({
-        mensaje: "No existe"
+        mensaje: "No encontrado"
       });
     } else {
       var id = req.params.userId;
       res.redirect('/api/users/'+id)
-      res.status(201)/*.json(data);*/
+      res.status(200)/*.json(data);*/
       //res.status(200).json(datos);
       //{mensaje: "se ha cambiado exitosamente el ID"}
     }
@@ -366,20 +366,20 @@ router.put('/:userId',async(req,res,next)=>{
   Movie.findOneAndUpdate({'pelicula.id': req.params.userId}, pelicula, function(err, datos) {
     if (datos == null) {
       res.status(404).json({
-        mensaje: "No existe"
+        mensaje: "No encontrado"
       });
     } else {
       //res.status(200).render('saludo', { otraCosa: datos.pelicula.pelicula,content: datos,url:datos.imagen});
       //res.status(200).json(datos);
       var id = req.body.id;
       res.redirect('/api/users/'+id)
-      res.status(201)/*.json(data);*/
-      
+      res.status(200)/*.json(data);*/
+
     }
 
-  }); 
+  });
 
-  
+
 });
 
 /* *********ESTE PUT FUNCIONA***********
