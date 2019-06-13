@@ -219,7 +219,8 @@ router.get('/:id', function(req, res, next) {
         mensaje: "No existe"
       });
     } else {
-      res.status(200).render('saludo', { otraCosa: datos.pelicula.pelicula,content: datos,url:datos.imagen});
+      //res.status(200).render('saludo', { otraCosa: datos.pelicula.pelicula,content: datos,url:datos.imagen});
+      res.status(200).json(datos);
     }
 
   });
@@ -322,15 +323,23 @@ router.patch('/',function(req,res,next){
 });
 
 router.patch('/:userId', function(req, res, next) {
-  Movie.findOneAndUpdate({'pelicula.id': req.params.userId},{$set:{'pelicula.id':50}},
+  var peli = {
+    imagen: req.body.imagen,
+    fase: req.body.fase,
+    
+};
+  Movie.findOneAndUpdate({'pelicula.id': req.params.userId},peli,
   function(err, datos) {
     if (datos == null) {
       res.status(404).json({
         mensaje: "No existe"
       });
     } else {
-      res.status(200).json(datos);
-      {mensaje: "se ha cambiado exitosamente el ID"}
+      var id = req.params.userId;
+      res.redirect('/api/users/'+id)
+      res.status(201)/*.json(data);*/
+      //res.status(200).json(datos);
+      //{mensaje: "se ha cambiado exitosamente el ID"}
     }
 
   });
@@ -339,6 +348,42 @@ router.put('/',function(req,res,next){
   res.status(405).json({mensaje:'Accion no permitida'});
 });
 
+router.put('/:userId',async(req,res,next)=>{
+  var pelicula = {
+    imagen: req.body.imagen,
+    fase: req.body.fase,
+    pelicula:{
+    id: req.body.id,
+    pelicula:req.body.pelicula,
+    estrenoEnEEUU:req.body.estrenoEnEEUU,
+    directores:req.body.directores,
+    guionistas:req.body.guionistas,
+    productores:req.body.productores,
+    estado:req.body.estado}
+};
+  let update = req.body
+
+  Movie.findOneAndUpdate({'pelicula.id': req.params.userId}, pelicula, function(err, datos) {
+    if (datos == null) {
+      res.status(404).json({
+        mensaje: "No existe"
+      });
+    } else {
+      //res.status(200).render('saludo', { otraCosa: datos.pelicula.pelicula,content: datos,url:datos.imagen});
+      //res.status(200).json(datos);
+      var id = req.body.id;
+      res.redirect('/api/users/'+id)
+      res.status(201)/*.json(data);*/
+      
+    }
+
+  }); 
+
+  
+});
+
+/* *********ESTE PUT FUNCIONA***********
+   *********NO ELIMINAR******************
 router.put('/:userId', function(req, res, next) {
   var pelicula = {
     imagen: req.body.imagen,
@@ -356,7 +401,7 @@ router.put('/:userId', function(req, res, next) {
       res.send(pelicula);
   });
 });
-
+        FIN DEL PUT***********/
   /*{$set:{'imagen':"https://www.obs-edu.com/sites/default/files/wp-content/uploads/sites/3/2015/12/Time-for-Change.jpg"}},
   {$set:{'fase':"Nueva fase"}},
   {$set:{'pelicula.pelicula':"Nueva pelicula"}},
