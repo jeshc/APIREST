@@ -366,7 +366,7 @@ router.put('/:userId',async(req,res,next)=>{
   Movie.findOneAndUpdate({'pelicula.id': req.params.userId}, pelicula, function(err, datos) {
     if (datos == null) {
       res.status(404).json({
-        mensaje: "No encontrado"
+        mensaje: "id no encontrado"
       });
     } else {
       //res.status(200).render('saludo', { otraCosa: datos.pelicula.pelicula,content: datos,url:datos.imagen});
