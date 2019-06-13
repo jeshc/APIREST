@@ -340,7 +340,7 @@ router.put('/',function(req,res,next){
 });
 
 router.put('/:userId', function(req, res, next) {
-  var pelicula = Movie({
+  var pelicula = {
     imagen: req.body.imagen,
     fase: req.body.fase,
     pelicula:{
@@ -351,7 +351,7 @@ router.put('/:userId', function(req, res, next) {
     guionistas:req.body.guionistas,
     productores:req.body.productores,
     estado:req.body.estado}
-});
+};
   Movie.update({'pelicula.id': req.params.userId},pelicula,function(){
       res.send(pelicula);
   });
