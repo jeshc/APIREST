@@ -4,10 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://sysinfo:jajasalu2@ds055680.mlab.com:55680/movies', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://developer:jajasalu2@cluster0-ll8bb.azure.mongodb.net/UCM?retryWrites=true', { useNewUrlParser: true });
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/marvel');
 
 var app = express();
 app.use('/css',express.static(__dirname + '/node_modules/bootstrap/dist/css'));
@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/api/users', usersRouter);
+app.use('/api/marvel', usersRouter);
 
 
 // catch 404 and forward to error handler
